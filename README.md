@@ -181,7 +181,7 @@ Los permisos se incluyen como Claims dentro del JWT.
 
 ---
 
-## 🗄 Base de Datos
+##  Base de Datos
 
 ### Esquema RRHH
 
