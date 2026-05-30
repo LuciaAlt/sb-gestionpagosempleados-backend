@@ -67,7 +67,7 @@ Solo lectura: ver empleados, ver reportes, exportar reportes. **No pueden** crea
 BCrypt es un algoritmo de hash **no-determinístico**: cada vez que se hashea la misma contraseña, produce un hash diferente. Esto es una propiedad de seguridad deseable (protege contra rainbow tables).
 
 Pero rompe `HasData` de EF Core, que requiere valores deterministas para detectar cambios entre migraciones. Por eso:
-- **Catálogos** (departments, roles, permissions, etc.) → `HasData` (deterministas)
+- **Catálogos** (departmentos, roles, permisos, etc.) → `HasData` (deterministas)
 - **Usuarios con contraseña** → runtime seeder (`DataSeeder.cs`)
 
 Es la práctica estándar en proyectos profesionales.
