@@ -2,7 +2,7 @@
 
 Sistema de Gestión de Nómina y Recursos Humanos desarrollado para la administración de empleados, usuarios, permisos y cálculo de pagos semanales.
 
-## 🚀 Tecnologías
+##  Tecnologías
 
 ### Backend
 
@@ -27,7 +27,7 @@ Sistema de Gestión de Nómina y Recursos Humanos desarrollado para la administr
 
 ---
 
-## 📋 Características
+##  Características
 
 ### Seguridad
 
@@ -63,7 +63,7 @@ Sistema de Gestión de Nómina y Recursos Humanos desarrollado para la administr
 
 ---
 
-## 🏗 Arquitectura de la Solución
+##  Arquitectura de la Solución
 
 ```text
 SB.Solution
@@ -90,7 +90,7 @@ SB.Solution
 
 ---
 
-## 💰 Cálculo de Nómina
+##  Cálculo de Nómina
 
 ### Empleado Asalariado
 
@@ -118,7 +118,7 @@ Pago = SalarioBase + Comisión + (SalarioBase × 10%)
 
 ---
 
-## 🔐 Permisos
+##  Permisos
 
 | Módulo | Permisos |
 |---------|----------|
@@ -131,7 +131,7 @@ Los permisos se incluyen como Claims dentro del JWT.
 
 ---
 
-## 📡 API Endpoints
+##  API Endpoints
 
 ### Autenticación
 
@@ -204,7 +204,7 @@ Seguridad.AuditLog
 
 ---
 
-## ⚙️ Instalación
+##  Instalación
 
 ### Restaurar paquetes
 
@@ -232,7 +232,7 @@ dotnet run
 
 ---
 
-## 🧪 Pruebas
+##  Pruebas
 
 ```bash
 dotnet test
@@ -240,7 +240,7 @@ dotnet test
 
 ---
 
-## 👤 Usuario Demo
+##  Usuario Demo
 
 ```text
 Usuario: admin
@@ -249,6 +249,6 @@ Password: Admin123!
 
 ---
 
-## 📄 Licencia
+##  Licencia
 
-Proyecto desarrollado con fines académicos y de demostración de buenas prácticas de desarrollo en .NET.
+Proyecto desarrollado con fines de prueba técnica y de demostración de buenas prácticas de desarrollo en .NET.
