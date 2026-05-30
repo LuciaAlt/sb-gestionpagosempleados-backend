@@ -18,5 +18,10 @@ namespace SB.Restful.Controllers
         [HttpGet("weekly")]
         public async Task<IActionResult> Weekly(CancellationToken ct)
             => Ok(await _service.GenerateWeeklyReportAsync(ct));
+
+        /// <summary>Reporte semanal con cálculo y detalle por tipo empleado.</summary>
+        [HttpGet("weeklyBy_typeemployee")]
+        public async Task<IActionResult> WeeklyByTypeEmployee(int tipo, CancellationToken ct)
+            => Ok(await _service.GenerateWeeklyByTypeReportAsync(tipo, ct));
     }
 }

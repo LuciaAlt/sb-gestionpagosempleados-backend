@@ -9,6 +9,7 @@ namespace SB.Services.Interface
 {
     public interface IReportesService
     {
+        Task<ReportDto> GenerateWeeklyByTypeReportAsync(int type, CancellationToken ct = default);
         Task<ReportDto> GenerateWeeklyReportAsync(CancellationToken ct = default);
     }
  
