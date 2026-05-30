@@ -1,4 +1,6 @@
+using Azure.Core;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.Extensions.Logging;
 using SB.Entities.Seguridad;
 using SB.Helpers.Exceptions;
@@ -52,20 +54,28 @@ public class AuthService : IAuthService
         var user = await _userRepo.GetByUsernameAsync(request.Usuario, ct);
         var ip = _currentUser.Ip;
 
-        if (user is null || !user.Activo || !_hasher.Verify(request.Password, user.HashContrasena))
+        if (user is null)
         {
-            _logger.LogWarning("Login fallido: {Username} desde {Ip}", request.Usuario, ip);
+            await RegistrarLoginFallido(request, "Usuario no existe", ip, ct);
+            throw new UnauthorizedException("Usuario o contraseña incorrectos.");
+        }
 
-            await _auditRepo.LogAsync(
-                Constants.AuditActions.LoginFail,
-                request.Usuario,
-                nameof(Usuario),
-                null,
-                $"Intento de login fallido para '{request.Usuario}'",
-                ip,
-                ct);
+        if (!user.Activo)
+        {
+            await RegistrarLoginFallido(request, "Usuario inactivo", ip, ct);
+            throw new UnauthorizedException("El usuario está inactivo.");
+        }
 
-            throw new UnauthorizedException();
+        if (user.Bloqueado)
+        {
+            await RegistrarLoginFallido(request, "Usuario bloqueado", ip, ct);
+            throw new UnauthorizedException("El usuario está bloqueado.");
+        }
+
+        if (!_hasher.Verify(request.Password, user.HashContrasena))
+        {
+            await RegistrarLoginFallido(request, "Contraseña incorrecta", ip, ct);
+            throw new UnauthorizedException("Usuario o contraseña incorrectos.");
         }
 
         var permisos = (await _permRepo.GetCodesByRoleIdAsync(user.RolId, ct)).ToList();
@@ -99,7 +109,27 @@ public class AuthService : IAuthService
             ExpiraEn = expiraen
         };
     }
+    private async Task RegistrarLoginFallido(
+      LoginRequestDto request,
+      string motivo,
+      string ip,
+      CancellationToken ct)
+    {
+        _logger.LogWarning(
+            "Login fallido: {Username} desde {Ip}. Motivo: {Motivo}",
+            request.Usuario,
+            ip,
+            motivo);
 
+        await _auditRepo.LogAsync(
+            Constants.AuditActions.LoginFail,
+            request.Usuario,
+            nameof(Usuario),
+            null,
+            $"Intento de login fallido para '{request.Usuario}'. Motivo: {motivo}",
+            ip,
+            ct);
+    }
     private static async Task ValidateAsync<T>(IValidator<T> validator, T instance, CancellationToken ct)
     {
         var result = await validator.ValidateAsync(instance, ct);
