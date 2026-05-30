@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>SB.Restful</RootNamespace>
+    <AssemblyName>SB.Restful</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Domain.Layer\SB.Entities\SB.Entities.csproj" />
+    <ProjectReference Include="..\..\..\Domain.Layer\SB.Models\SB.Models.csproj" />
+    <ProjectReference Include="..\..\..\Repository.Layer\SB.Repositories\SB.Repositories.csproj" />
+    <ProjectReference Include="..\..\..\Service.Layer\SB.Services\SB.Services.csproj" />
+    <ProjectReference Include="..\..\..\Shared.Layer\SB.Helpers\SB.Helpers.csproj" />
+  </ItemGroup>
+  <Target Name="CopyXmlDocs" AfterTargets="Build">
+    <ItemGroup>
+      <ModelsXml Include="..\..\..\Domain.Layer\SB.Models\bin\$(Configuration)\$(TargetFramework)\SB.Models.xml" />
+      <ServicesXml Include="..\..\..\Service.Layer\SB.Services\bin\$(Configuration)\$(TargetFramework)\SB.Services.xml" />
+      <HelpersXml Include="..\..\..\Shared.Layer\SB.Helpers\bin\$(Configuration)\$(TargetFramework)\SB.Helpers.xml" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ModelsXml)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="Exists('@(ModelsXml)')" />
+    <Copy SourceFiles="@(ServicesXml)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="Exists('@(ServicesXml)')" />
+    <Copy SourceFiles="@(HelpersXml)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="Exists('@(HelpersXml)')" />
+  </Target>
+</Project>
