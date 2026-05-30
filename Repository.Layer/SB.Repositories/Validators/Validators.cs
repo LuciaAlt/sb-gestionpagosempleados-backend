@@ -14,7 +14,7 @@ public class EmployeeDtoValidator : AbstractValidator<EmpleadoDtos>
         RuleFor(x => x.Nombres).NotEmpty().MaximumLength(50);
         RuleFor(x => x.Apellidos).NotEmpty().MaximumLength(50);
         RuleFor(x => x.NumeroSeguroSocial).NotEmpty().MaximumLength(20);
-        RuleFor(x => x.DepartmentoId).GreaterThan(0);
+        RuleFor(x => x.DepartamentoId).GreaterThan(0);
         RuleFor(x => x.TipoEmpleadoCodigo).IsInEnum();
 
         When(x => x.TipoEmpleadoCodigo == CodigoTipoEmpleado.Asalariado, () =>

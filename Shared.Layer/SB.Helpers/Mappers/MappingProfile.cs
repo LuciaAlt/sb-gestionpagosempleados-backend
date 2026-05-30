@@ -15,7 +15,7 @@ public class MappingProfile : Profile
         CreateMap<TipoEmpleado, TipoEmpleadoDto>();
 
         CreateMap<Empleado, EmpleadoDtos>()
-            .ForMember(d => d.DepartmentoId,
+            .ForMember(d => d.DepartamentoId,
                 opt => opt.MapFrom(src => src.DepartmentoId))
 
             .ForMember(d => d.TipoEmpleadoId,
@@ -24,7 +24,7 @@ public class MappingProfile : Profile
             .ForMember(d => d.TipoEmpleadoCodigo,
                 opt => opt.MapFrom(src => src.TipoCodigo))
 
-            .ForMember(d => d.DepartmentNombre,
+            .ForMember(d => d.DepartamentoNombre,
                 opt => opt.MapFrom(src =>
                     src.Departmento != null
                         ? src.Departmento.Nombre

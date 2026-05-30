@@ -20,5 +20,7 @@ namespace SB.Models.Dtos.Seguridad
         public bool Bloqueado { get; set; }
         public DateTimeOffset? FechaCambioContrasena { get; set; }
         public DateTimeOffset? UltimoAcceso { get; set; }
+
+        public string NombreCompleto => $"{Nombres} {Apellidos}";
     }
 }
