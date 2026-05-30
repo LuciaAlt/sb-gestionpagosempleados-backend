@@ -4,6 +4,7 @@ using SB.Entities.Seguridad;
 using SB.Models.Contracts;
 using SB.Models.Helpers;
 using SB.Repositories.Context;
+using System.Security.Cryptography;
 
 namespace SB.Repositories.Implementation;
 public class EmployeeRepository : RepositoryBase<Empleado>, IEmployeeRepository
@@ -76,7 +77,7 @@ public class UserRepository : RepositoryBase<Usuario>, IUserRepository
 
     public Task<bool> ExistsByEmailAsync(string email, CancellationToken ct = default)
       => _context.Usuario.AnyAsync(u => u.Correo == email, ct);
-
+   
 }
 
 public class AuditLogRepository : RepositoryBase<Auditoria>, IAuditLogRepository

@@ -1,6 +1,7 @@
 using Azure.Core;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SB.Entities.Seguridad;
 using SB.Helpers.Exceptions;
@@ -8,7 +9,9 @@ using SB.Models.Contracts;
 using SB.Models.Dtos.Auth;
 using SB.Models.Dtos.Seguridad;
 using SB.Models.Helpers;
+using SB.Repositories.Context;
 using SB.Services.Interface;
+using System.Security.Cryptography;
 
 namespace SB.Services.Implementation;
 
@@ -128,6 +131,7 @@ public class AuthService : IAuthService
             ip,
             ct);
     }
+
     private static async Task ValidateAsync<T>(IValidator<T> validator, T instance, CancellationToken ct)
     {
         var result = await validator.ValidateAsync(instance, ct);
