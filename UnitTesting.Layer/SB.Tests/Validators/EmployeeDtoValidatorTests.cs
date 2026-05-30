@@ -16,7 +16,7 @@ public class EmployeeDtoValidatorTests
         var dto = new EmpleadoDtos
         {
             Nombres = "Ana", Apellidos = "Pérez",
-            NumeroSeguroSocial = "001", DepartmentoId = 1,
+            NumeroSeguroSocial = "001", DepartamentoId = 1,
             TipoEmpleadoCodigo = CodigoTipoEmpleado.Asalariado
         };
         _validator.Validate(dto).IsValid.Should().BeFalse();
@@ -28,7 +28,7 @@ public class EmployeeDtoValidatorTests
         var dto = new EmpleadoDtos
         {
             Nombres = "Juan", Apellidos = "G", NumeroSeguroSocial = "002",
-            DepartmentoId = 1, TipoEmpleadoCodigo = CodigoTipoEmpleado.PorHoras,
+            DepartamentoId = 1, TipoEmpleadoCodigo = CodigoTipoEmpleado.PorHoras,
             SueldoPorHora = 10, HorasTrabajadas = 200
         };
         _validator.Validate(dto).IsValid.Should().BeFalse();
@@ -40,7 +40,7 @@ public class EmployeeDtoValidatorTests
         var dto = new EmpleadoDtos
         {
             Nombres = "María", Apellidos = "L", NumeroSeguroSocial = "003",
-            DepartmentoId = 1, TipoEmpleadoCodigo = CodigoTipoEmpleado.AsalariadoPorComision,
+            DepartamentoId = 1, TipoEmpleadoCodigo = CodigoTipoEmpleado.AsalariadoPorComision,
             VentasBrutas = 5000, TarifaComision = 0.1m, SalarioBase = 1000
         };
         _validator.Validate(dto).IsValid.Should().BeTrue();

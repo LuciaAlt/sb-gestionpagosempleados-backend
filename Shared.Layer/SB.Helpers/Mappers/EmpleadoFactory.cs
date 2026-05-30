@@ -24,7 +24,7 @@ public static class EmpleadoFactory
         entity.Nombres = dto.Nombres;
         entity.Apellidos = dto.Apellidos;
         entity.NumeroSeguroSocial = dto.NumeroSeguroSocial;
-        entity.DepartmentoId = dto.DepartmentoId;
+        entity.DepartmentoId = dto.DepartamentoId;
         entity.TipoEmpleadoId = dto.TipoEmpleadoId;
         entity.Activo = dto.Activo;
 
@@ -43,7 +43,7 @@ public static class EmpleadoFactory
         entity.Nombres = dto.Nombres;
         entity.Apellidos = dto.Apellidos;
         entity.NumeroSeguroSocial = dto.NumeroSeguroSocial;
-        entity.DepartmentoId = dto.DepartmentoId;
+        entity.DepartmentoId = dto.DepartamentoId;
         entity.Activo = dto.Activo;
 
         entity.SalarioSemanal = 0;
