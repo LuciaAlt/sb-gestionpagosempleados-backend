@@ -1,4 +1,4 @@
-# 💼 SB Payroll System
+#  SB - Superintendencia de Bancos System
 
 Sistema de Gestión de Nómina y Recursos Humanos desarrollado para la administración de empleados, usuarios, permisos y cálculo de pagos semanales.
 
