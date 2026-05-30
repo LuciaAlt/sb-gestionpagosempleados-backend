@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SB.Models.Dtos.Auth;
+using SB.Models.Dtos.RRHH;
 using SB.Models.Helpers;
+using SB.Services.Implementation;
 using SB.Services.Interface;
 
 namespace SB.Restful.Controllers;
@@ -26,5 +28,6 @@ public class AuthController : ControllerBase
         var model = await _service.LoginAsync(request, ct);
         return Ok(model);
     }
-   
+
+
 }
