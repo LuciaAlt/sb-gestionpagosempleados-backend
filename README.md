@@ -251,4 +251,4 @@ Password: Admin123!
 
 ##  Licencia
 
-Proyecto desarrollado con fines de prueba técnica y de demostración de buenas prácticas de desarrollo en .NET.
+Proyecto desarrollado con fines de pruebas técnica y de demostración de buenas prácticas de desarrollo en .NET.
