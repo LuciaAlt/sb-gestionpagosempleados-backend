@@ -21,7 +21,6 @@ public class AuthService : IAuthService
     private readonly IJwtTokenGenerator _tokenGen;
     private readonly ICurrentUserService _currentUser;
     private readonly IValidator<LoginRequestDto> _loginValidator;
-    private readonly IValidator<RegistrarUsuarioDto> _registerValidator;
     private readonly ILogger<AuthService> _logger;
 
     public AuthService(
@@ -42,7 +41,6 @@ public class AuthService : IAuthService
         _tokenGen = tokenGen;
         _currentUser = currentUser;
         _loginValidator = loginValidator;
-        _registerValidator = registerValidator;
         _logger = logger;
     }
     public async Task<LoginResponseDto> LoginAsync(
@@ -141,4 +139,5 @@ public class AuthService : IAuthService
             throw new Helpers.Exceptions.ValidationException(errors);
         }
     }
+   
 }
