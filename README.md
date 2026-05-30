@@ -199,7 +199,7 @@ Seguridad.Rol
 Seguridad.Modulo
 Seguridad.Permiso
 Seguridad.RolPermiso
-Seguridad.AuditLog
+Seguridad.Auditoria
 ```
 
 ---
