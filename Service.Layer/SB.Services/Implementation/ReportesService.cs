@@ -51,5 +51,52 @@ namespace SB.Services.Implementation
             _logger.LogInformation("Reporte generado: {N} empleados · total {Total:C}", report.TotalEmpleados, report.TotalPagado);
             return report;
         }
+
+        public async Task<ReportDto> GenerateWeeklyByTypeReportAsync(
+        int type,
+        CancellationToken ct = default)
+        {
+            _logger.LogInformation("Generando reporte semanal de pagos por tipo de empleado");
+
+            var employees = (await _repo.GetAllAsync(ct))
+                .Where(e => e.Activo);
+
+            if (type > 0)
+                employees = employees.Where(e => e.TipoEmpleadoId == type);
+
+            var items = employees
+                .Select(e =>
+                {
+                    var result = _resolver.Calculate(e);
+
+                    return new ReportItemDto
+                    {
+                        EmployeeId = e.Id,
+                        NombreCompleto = $"{e.Nombres} {e.Apellidos}".Trim(),
+                        NumeroSeguroSocial = e.NumeroSeguroSocial,
+                        Departamento = e.Departmento?.Nombre ?? string.Empty,
+                        TipoEmpleado = e.TipoCodigo,
+                        TipoEmpleadoNombre = e.TipoEmpleado?.Nombre ?? string.Empty,
+                        DetalleCalculo = result.Detail,
+                        PagoSemanal = result.Amount
+                    };
+                })
+                .ToList();
+
+            var report = new ReportDto
+            {
+                FechaGeneracion = DateTimeOffset.Now,
+                TotalEmpleados = items.Count,
+                TotalPagado = items.Sum(i => i.PagoSemanal),
+                Items = items
+            };
+
+            _logger.LogInformation(
+                "Reporte generado: {TotalEmpleados} empleados · total {TotalPagado:C}",
+                report.TotalEmpleados,
+                report.TotalPagado);
+
+            return report;
+        }
     }
 }
