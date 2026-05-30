@@ -101,13 +101,18 @@ public class AuthService : IAuthService
             Token = token,
             UsuarioId = user.Id.ToString(),
             NombreCompleto = $"{user.Nombres} {user.Apellidos}",
+            Correo=user.Correo,
             Activo = user.Activo,
             Bloqueado = user.Bloqueado,
             NombreUsuario = user.NombreUsuario,
             Role = user.Rol?.Codigo ?? string.Empty,
+            NombreRole= user.Rol.Nombre ?? string.Empty,
             Permisos = permisos,
             Modulos = Enumerable.Empty<Modulo>(),
-            ExpiraEn = expiraen
+            FechaCreacion =user.FechaRegistra,
+            InicioEn= DateTimeOffset.Now,
+            ExpiraEn = expiraen,
+            UltimoAcceso= (DateTimeOffset)user.UltimoAcceso
         };
     }
     private async Task RegistrarLoginFallido(
