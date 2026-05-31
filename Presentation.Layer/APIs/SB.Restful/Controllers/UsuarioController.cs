@@ -61,7 +61,7 @@ namespace SB.Restful.Controllers
         /// <summary>Activa o Inactiva un usuario (baja lógica). Solo Admin.</summary>
         [HttpPatch("{id:int}")]
         [Authorize(Roles = Constants.Roles.Admin)]
-        public async Task<IActionResult> ActivateOrDeactivate(int id, bool value, CancellationToken ct)
+        public async Task<IActionResult> ActivateOrDeactivate(int id, [FromQuery] bool value, CancellationToken ct)
         {
             if (value)
                 await _service.ActivateAsync(id, ct);
@@ -70,7 +70,17 @@ namespace SB.Restful.Controllers
 
             return NoContent();
         }
+        /// <summary>Desbloquear Or bloquear un usuario (baja lógica). Solo Admin.</summary>
+        [HttpPatch("{id:int}/block")]
+        public async Task<IActionResult> UnlockOrBlock(int id, [FromQuery] bool value, CancellationToken ct)
+        {
+            if (value)
+                await _service.BlockAsync(id, ct);
+            else
+                await _service.UnlockAsync(id, ct);
 
+            return NoContent();
+        }
         /// <summary>Delete un usuario (baja lógica). Solo Admin.</summary>
         [HttpDelete("{id:int}")]
         [Authorize(Roles = Constants.Roles.Admin)]

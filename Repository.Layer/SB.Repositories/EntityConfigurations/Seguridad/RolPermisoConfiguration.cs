@@ -29,7 +29,7 @@ public class RolPermisoConfiguration : IEntityTypeConfiguration<RolPermiso>
         var seed = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
         var sys = Constants.System.SystemUser;
         // ADMIN: todos los permisos (1..9)
-        var adminRows = Enumerable.Range(1, 9).Select(pid =>
+        var adminRows = Enumerable.Range(1, 12).Select(pid =>
             new RolPermiso
             {
                 Id = pid,
@@ -39,7 +39,7 @@ public class RolPermisoConfiguration : IEntityTypeConfiguration<RolPermiso>
                 UsuarioConcede = sys
             });
         // USUARIO: solo lectura (1=EMPLEADOS_VER, 5=REPORTES_VER, 6=REPORTES_EXPORTAR)
-        var userRows = new[] { 1, 5, 6 }.Select((pid, idx) =>
+        var userRows = new[] { 1, 5 }.Select((pid, idx) =>
             new RolPermiso
             {
                 Id = 100 + idx,

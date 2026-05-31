@@ -23,7 +23,7 @@ public static class DataSeeder
     {
         await db.Database.MigrateAsync();
 
-        if (!await db.Users.AnyAsync())
+        if (!await db.Usuario.AnyAsync())
         {
             var now = DateTimeOffset.Now;
             var sys = Constants.System.SystemUser;
@@ -128,8 +128,8 @@ public static class DataSeeder
                 }
             };
 
-            db.Users.AddRange(administradores);
-            db.Users.AddRange(normales);
+            db.Usuario.AddRange(administradores);
+            db.Usuario.AddRange(normales);
             await db.SaveChangesAsync();
         }
     }

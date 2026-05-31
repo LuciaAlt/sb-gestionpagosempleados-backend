@@ -94,7 +94,8 @@ public static class DependencyInjection
 
     public static void ConfigureValidation(this IServiceCollection services)
     {
-        services.AddValidatorsFromAssemblyContaining<EmployeeDtoValidator>();
+        services.AddValidatorsFromAssemblyContaining<EmpleadoDtoValidator>();
+        services.AddValidatorsFromAssemblyContaining<UsuarioDtoValidator>();
     }
 
     #endregion

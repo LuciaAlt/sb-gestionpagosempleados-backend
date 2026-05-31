@@ -1,17 +1,17 @@
-#  Credenciales de Usuarios Precargados
+# Credenciales de Usuarios Precargados
 
 Estas 6 cuentas se siembran automáticamente al arrancar la API por primera vez.
 
-##  Administradores (rol `ADMIN`)
+## Administradores (rol `ADMIN`)
 
 Acceso completo: ver, crear, editar, inactivar empleados, gestionar usuarios, ver bitácora, exportar reportes.
 
-| # | Username | Contraseña | Email | Rol |
+| # | Usuario | Contraseña | Email | Rol |
 |---|---|---|---|---|
 | 1 | `admin` | `Admin123!` | admin@sb.local | ADMIN |
 | 2 | `supervisor` | `Super123!` | supervisor@sb.local | ADMIN |
 
-## Usuarios normales (rol `USUARIO`)
+##  Usuarios normales (rol `USUARIO`)
 
 Solo lectura: ver empleados, ver reportes, exportar reportes. **No pueden** crear ni editar empleados ni gestionar usuarios.
 
@@ -27,15 +27,15 @@ Solo lectura: ver empleados, ver reportes, exportar reportes. **No pueden** crea
 ##  Permisos por rol
 
 ### Rol ADMIN (Id=1) — los 9 permisos
-- EMPLEADOS_VER, EMPLEADOS_CREAR, EMPLEADOS_EDITAR, EMPLEADOS_INACTIVAR
+- EMPLEADOS_VER, EMPLEADOS_CREAR, EMPLEADOS_EDITAR, EMPLEADOS_ACTIVARORDESACTIVAR
 - REPORTES_VER, REPORTES_EXPORTAR
-- USUARIOS_VER, USUARIOS_CREAR, AUDITORIA_VER
+- USUARIOS_VER, USUARIOS_CREAR, AUDITORIA_VER,USUARIOS_EDITAR, USUARIOS_ACTIVARORDESACTIVAR,USUARIOS_LOQUEAORDESBLOQUEA
 
-### Rol USUARIO (Id=2) — 3 permisos (solo lectura)
+### Rol USUARIO (Id=2) — 2 permisos (solo lectura)
 - EMPLEADOS_VER
 - REPORTES_VER
 - REPORTES_EXPORTAR
-
+-
 ---
 
 ##  Cómo probarlo
@@ -45,7 +45,7 @@ Solo lectura: ver empleados, ver reportes, exportar reportes. **No pueden** crea
 1. Ir a `http://localhost:5080`
 2. `POST /api/auth/login`:
    ```json
-   { "username": "admin", "password": "Admin123!" }
+   { "usuario": "admin", "password": "Admin123!" }
    ```
 3. Copiar el `token` de la respuesta.
 4. Click en **Authorize ** → `Bearer <token>` → **Authorize**.
@@ -67,7 +67,7 @@ Solo lectura: ver empleados, ver reportes, exportar reportes. **No pueden** crea
 BCrypt es un algoritmo de hash **no-determinístico**: cada vez que se hashea la misma contraseña, produce un hash diferente. Esto es una propiedad de seguridad deseable (protege contra rainbow tables).
 
 Pero rompe `HasData` de EF Core, que requiere valores deterministas para detectar cambios entre migraciones. Por eso:
-- **Catálogos** (departmentos, roles, permisos, etc.) → `HasData` (deterministas)
+- **Catálogos** (departments, roles, permissions, etc.) → `HasData` (deterministas)
 - **Usuarios con contraseña** → runtime seeder (`DataSeeder.cs`)
 
 Es la práctica estándar en proyectos profesionales.
@@ -78,5 +78,5 @@ Es la práctica estándar en proyectos profesionales.
 
 Cuando construyamos el frontend, usaremos estas credenciales para:
 - **Pantalla de login**: validar con `admin / Admin123!`
-- **Mostrar/ocultar botones**: el JWT incluye los permisos como claims `permission`, el frontend los lee y decide qué mostrar
+- **Mostrar/ocultar botones**: el JWT incluye los permisos como claims `permisos`, el frontend los lee y decide qué mostrar
 - **Probar control de acceso**: loguearse como `jperez` para verificar que no aparece el botón "Registrar empleado"
