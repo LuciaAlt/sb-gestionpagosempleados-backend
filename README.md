@@ -440,6 +440,8 @@ Ejemplo:
 
 # Opcion 1 - Crear Base de Datos mediante Migraciones
 
+```seleccionar del proyecto la capa Repository.Layer en el manager console
+
 Eliminar la carpeta:
 
 ```text

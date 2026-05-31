@@ -7,6 +7,7 @@ using SB.Entities.Seguridad;
 using SB.Helpers.Exceptions;
 using SB.Models.Contracts;
 using SB.Models.Dtos.Auth;
+using SB.Models.Dtos.RRHH;
 using SB.Models.Dtos.Seguridad;
 using SB.Models.Helpers;
 using SB.Repositories.Context;
@@ -49,7 +50,7 @@ public class AuthService : IAuthService
     LoginRequestDto request,
     CancellationToken ct = default)
     {
-        await ValidateAsync(_loginValidator, request, ct);
+        await ValidateAsync( request, ct);
 
         var user = await _userRepo.GetByUsernameAsync(request.Usuario, ct);
         var ip = _currentUser.Ip;
@@ -135,17 +136,28 @@ public class AuthService : IAuthService
             ip,
             ct);
     }
-
-    private static async Task ValidateAsync<T>(IValidator<T> validator, T instance, CancellationToken ct)
+    private async Task ValidateAsync(LoginRequestDto dto, CancellationToken ct)
     {
-        var result = await validator.ValidateAsync(instance, ct);
-        if (!result.IsValid)
-        {
-            var errors = result.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
-            throw new Helpers.Exceptions.ValidationException(errors);
-        }
+        var result = await _loginValidator.ValidateAsync(dto, ct);
+
+        if (result.IsValid)
+            return;
+
+        var errors = result.Errors
+            .GroupBy(e => e.PropertyName)
+            .ToDictionary(
+                g => g.Key,
+                g => g.Select(e => e.ErrorMessage).ToArray());
+
+        var mensaje = string.Join(
+            " | ",
+            result.Errors
+                .Select(e => e.ErrorMessage)
+                .Distinct());
+
+        throw new Helpers.Exceptions.ValidationException(
+            mensaje,
+            errors);
     }
    
 }

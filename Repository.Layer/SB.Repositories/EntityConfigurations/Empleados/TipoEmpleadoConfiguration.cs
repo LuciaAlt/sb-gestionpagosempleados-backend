@@ -20,7 +20,7 @@ public class TipoEmpleadoConfiguration : IEntityTypeConfiguration<TipoEmpleado>
 
         builder.HasQueryFilter(t => !t.Borrado);
 
-        var seed = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        var seed = DateTimeOffset.Now;
         var sys = Constants.System.SystemUser;
         builder.HasData(
             new TipoEmpleado { Id = 1, Codigo = "001",         Nombre = "Empleado Asalariado",              Descripcion = "Pago semanal fijo.",                    UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
