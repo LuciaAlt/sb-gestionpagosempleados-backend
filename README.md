@@ -1,26 +1,26 @@
-# Sistema de Gesti車n de Pagos de Empleados
+# Sistema de Gestion de Pagos de Empleados
 
-Backend desarrollado en ASP.NET Core Web API para la administraci車n de empleados, usuarios, permisos, auditor赤a y generaci車n de reportes de n車mina.
+Backend desarrollado en ASP.NET Core Web API para la administracion de empleados, usuarios, permisos, auditoria y generacion de reportes de nomina.
 
 ---
 
-# Descripci車n General
+# Descripcion General
 
-El Sistema de Gesti車n de Pagos de Empleados permite administrar de forma centralizada:
+El Sistema de Gestion de Pagos de Empleados permite administrar de forma centralizada:
 
 * Empleados
 * Usuarios
 * Roles y permisos
-* Cat芍logos de apoyo
-* Reportes de n車mina
-* Auditor赤a de operaciones
+* Catalogos de apoyo
+* Reportes de nomina
+* Auditoria de operaciones
 * Seguridad basada en JWT
 
-La soluci車n fue desarrollada utilizando una arquitectura multicapa (N-Tier Architecture), aplicando principios SOLID, Repository Pattern, Dependency Injection y buenas pr芍cticas de desarrollo empresarial.
+La solucion fue desarrollada utilizando una arquitectura multicapa (N-Tier Architecture), aplicando principios SOLID, Repository Pattern, Dependency Injection y buenas practicas de desarrollo empresarial.
 
 ---
 
-# Tecnolog赤as Utilizadas
+# Tecnologias Utilizadas
 
 ## Backend
 
@@ -46,26 +46,26 @@ La soluci車n fue desarrollada utilizando una arquitectura multicapa (N-Tier Arch
 
 ---
 
-# Arquitectura de la Soluci車n
+# Arquitectura de la Solucion
 
 ```text
 SB.Solution
 
-念岸岸 Domain.Layer
-岫   念岸岸 SB.Entities
-岫   弩岸岸 SB.Models
-岫
-念岸岸 Repository.Layer
-岫   弩岸岸 SB.Repositories
-岫
-念岸岸 Service.Layer
-岫   弩岸岸 SB.Services
-岫
-念岸岸 Presentation.Layer
-岫   弩岸岸 SB.Restful
-岫
-弩岸岸 UnitTesting.Layer
-    弩岸岸 SB.Tests
+├── Domain.Layer
+│   ├── SB.Entities
+│   └── SB.Models
+│
+├── Repository.Layer
+│   └── SB.Repositories
+│
+├── Service.Layer
+│   └── SB.Services
+│
+├── Presentation.Layer
+│   └── SB.Restful
+│
+└── UnitTesting.Layer
+    └── SB.Tests
 ```
 
 ---
@@ -74,7 +74,7 @@ SB.Solution
 
 ## SB.Entities
 
-Contiene las entidades principales de la aplicaci車n.
+Contiene las entidades principales de la aplicacion.
 
 Ejemplos:
 
@@ -95,7 +95,7 @@ Contiene:
 * Responses
 * Helpers
 * Validaciones
-* Objetos de paginaci車n
+* Objetos de paginacion
 
 ---
 
@@ -105,7 +105,7 @@ Implementa:
 
 * Entity Framework Core
 * Repositorios
-* Configuraci車n de entidades
+* Configuracion de entidades
 * Migraciones
 * Seeds
 * Interceptores
@@ -115,7 +115,7 @@ Implementa:
 
 ## SB.Services
 
-Contiene toda la l車gica de negocio.
+Contiene toda la logica de negocio.
 
 Servicios principales:
 
@@ -130,7 +130,7 @@ Servicios principales:
 
 ## SB.Restful
 
-Exposici車n de la API REST.
+Exposicion de la API REST.
 
 Controladores:
 
@@ -143,52 +143,52 @@ Controladores:
 
 ---
 
-# M車dulos Funcionales
+# Modulos Funcionales
 
 ## Seguridad
 
-* Inicio de sesi車n JWT
-* Cambio de contrase?a
-* Gesti車n de usuarios
+* Inicio de sesion JWT
+* Cambio de contrasena
+* Gestion de usuarios
 * Roles y permisos
 * Bloqueo y desbloqueo de usuarios
-* Activaci車n e inactivaci車n de usuarios
+* Activacion e inactivacion de usuarios
 
 ---
 
 ## Recursos Humanos
 
-* Gesti車n de empleados
+* Gestion de empleados
 * Consulta paginada
-* B迆squeda avanzada
-* Activaci車n e inactivaci車n
-* Eliminaci車n l車gica (Soft Delete)
+* Busqueda avanzada
+* Activacion e inactivacion
+* Eliminacion logica (Soft Delete)
 
 ---
 
-## Cat芍logos
+## Catalogos
 
 * Departamentos
 * Tipos de empleados
-* M車dulos del sistema
+* Modulos del sistema
 
 ---
 
 ## Reportes
 
-* Reporte semanal de n車mina
+* Reporte semanal de nomina
 * Reporte por empleado
-* Exportaci車n de informaci車n
+* Exportacion de informacion
 
 ---
 
-## Auditor赤a
+## Auditoria
 
-* Registro autom芍tico de operaciones
+* Registro automatico de operaciones
 * Historial de cambios
 * Consulta paginada
 * Filtros por usuario
-* Filtros por acci車n
+* Filtros por accion
 * Filtros por entidad
 * Filtros por fechas
 
@@ -196,11 +196,11 @@ Controladores:
 
 # Seguridad
 
-## Autenticaci車n
+## Autenticacion
 
 La API utiliza JWT Bearer Token.
 
-Endpoint de autenticaci車n:
+Endpoint de autenticacion:
 
 ```http
 POST /api/Auth/Login
@@ -220,22 +220,25 @@ Administrador
 
 ## Permisos
 
-| M車dulo    | Permisos                      |
-| --------- | ----------------------------- |
-| EMPLEADOS | VER, CREAR, EDITAR, ACTIVARORDESACTIVAR |
-| USUARIOS  | VER, CREAR, EDITAR, ACTIVARORDESACTIVAR ,BLOQUEAORDESBLOQUEA|
-| REPORTES  | VER, EXPORTAR                 |
-| AUDITORIA | VER                           |
+| Modulo    | Permisos                                                       |
+| --------- | -------------------------------------------------------------- |
+| EMPLEADOS | VER, CREAR, EDITAR, ACTIVAR, DESACTIVAR                        |
+| USUARIOS  | VER, CREAR, EDITAR, ACTIVAR, DESACTIVAR, BLOQUEAR, DESBLOQUEAR |
+| REPORTES  | VER, EXPORTAR                                                  |
+| AUDITORIA | VER                                                            |
 
 Los permisos son incluidos como Claims dentro del JWT.
 
 ---
-## ?懁 Usuario Demo
+
+# Usuario Demo
 
 ```text
 Usuario: admin
 Password: Admin123!
 ```
+
+---
 
 # Base de Datos
 
@@ -262,9 +265,9 @@ Seguridad.Auditoria
 
 ---
 
-# Auditor赤a
+# Auditoria
 
-Todas las operaciones de escritura son auditadas autom芍ticamente mediante:
+Todas las operaciones de escritura son auditadas automaticamente mediante:
 
 ```text
 AuditTableInterceptor
@@ -273,10 +276,10 @@ AuditTableInterceptor
 Se registran:
 
 * Usuario
-* Acci車n
+* Accion
 * Entidad
 * Identificador
-* Direcci車n IP
+* Direccion IP
 * Fecha
 * Detalle de cambios
 
@@ -286,37 +289,37 @@ Se registran:
 
 ## UsuarioDto
 
-Representa la informaci車n de los usuarios del sistema.
+Representa la informacion de los usuarios del sistema.
 
 ---
 
 ## EmpleadoDto
 
-Representa la informaci車n de los empleados.
+Representa la informacion de los empleados.
 
 ---
 
 ## LoginRequestDto
 
-Utilizado para autenticaci車n.
+Utilizado para autenticacion.
 
 ---
 
 ## ChangePasswordDto
 
-Utilizado para el cambio de contrase?a.
+Utilizado para el cambio de contrasena.
 
 ---
 
-# Paginaci車n
+# Paginacion
 
-Los m車dulos siguientes utilizan paginaci車n:
+Los modulos siguientes utilizan paginacion:
 
 * Empleados
 * Usuarios
-* Auditor赤a
+* Auditoria
 
-Formato est芍ndar de respuesta:
+Formato estandar de respuesta:
 
 ```json
 {
@@ -334,7 +337,7 @@ Formato est芍ndar de respuesta:
 
 ## AuthController
 
-| M谷todo | Endpoint                 |
+| Metodo | Endpoint                 |
 | ------ | ------------------------ |
 | POST   | /api/Auth/Login          |
 | POST   | /api/Auth/ChangePassword |
@@ -344,7 +347,7 @@ Formato est芍ndar de respuesta:
 
 ## EmpleadoController
 
-| M谷todo | Endpoint                  |
+| Metodo | Endpoint                  |
 | ------ | ------------------------- |
 | GET    | /api/Empleado/GetPaginate |
 | GET    | /api/Empleado/{id}        |
@@ -357,22 +360,22 @@ Formato est芍ndar de respuesta:
 
 ## UsuarioController
 
-| M谷todo | Endpoint                 |
-| ------ | ------------------------ |
-| GET    | /api/Usuario/GetPaginate |
-| GET    | /api/Usuario/GetAll      |
-| GET    | /api/Usuario/{id}        |
-| POST   | /api/Usuario             |
-| PUT    | /api/Usuario/{id}        |
-| PATCH  | /api/Usuario/{id}/Activate|
-| PATCH  | /api/Usuario/{id}/block  |
-| DELETE | /api/Usuario/{id}        |
+| Metodo | Endpoint                   |
+| ------ | -------------------------- |
+| GET    | /api/Usuario/GetPaginate   |
+| GET    | /api/Usuario/GetAll        |
+| GET    | /api/Usuario/{id}          |
+| POST   | /api/Usuario               |
+| PUT    | /api/Usuario/{id}          |
+| PATCH  | /api/Usuario/{id}/Activate |
+| PATCH  | /api/Usuario/{id}/block    |
+| DELETE | /api/Usuario/{id}          |
 
 ---
 
 ## CatalogosController
 
-| M谷todo | Endpoint                      |
+| Metodo | Endpoint                      |
 | ------ | ----------------------------- |
 | GET    | /api/Catalogos/departments    |
 | GET    | /api/Catalogos/employee-types |
@@ -382,7 +385,7 @@ Formato est芍ndar de respuesta:
 
 ## ReportesController
 
-| M谷todo | Endpoint                    |
+| Metodo | Endpoint                    |
 | ------ | --------------------------- |
 | GET    | /api/Reportes/weekly        |
 | GET    | /api/Reportes/employee/{id} |
@@ -391,13 +394,13 @@ Formato est芍ndar de respuesta:
 
 ## AuditoriaController
 
-| M谷todo | Endpoint                   |
+| Metodo | Endpoint                   |
 | ------ | -------------------------- |
 | GET    | /api/Auditoria/GetPaginate |
 
 ---
 
-# Instalaci車n
+# Instalacion
 
 ## Restaurar Dependencias
 
@@ -407,7 +410,7 @@ dotnet restore
 
 ---
 
-## Compilar Soluci車n
+## Compilar Solucion
 
 ```bash
 dotnet build
@@ -415,7 +418,7 @@ dotnet build
 
 ---
 
-# Configuraci車n de Base de Datos
+# Configuracion de Base de Datos
 
 Modificar el archivo:
 
@@ -435,7 +438,7 @@ Ejemplo:
 
 ---
 
-# Opci車n 1 - Crear Base de Datos mediante Migraciones
+# Opcion 1 - Crear Base de Datos mediante Migraciones
 
 Eliminar la carpeta:
 
@@ -443,13 +446,13 @@ Eliminar la carpeta:
 SB.Repositories/Migrations
 ```
 
-Crear migraci車n:
+Crear migracion:
 
 ```powershell
 Add-Migration InitialCreate
 ```
 
-Aplicar migraci車n:
+Aplicar migracion:
 
 ```powershell
 Update-Database
@@ -457,9 +460,9 @@ Update-Database
 
 ---
 
-# Opci車n 2 - Crear Base de Datos mediante Script SQL
+# Opcion 2 - Crear Base de Datos mediante Script SQL
 
-Ubicaci車n:
+Ubicacion:
 
 ```text
 SB.Solution\Scripts\EsquemaYData.sql
@@ -471,13 +474,13 @@ El script incluye:
 
 * Esquema de base de datos
 * Relaciones
-* Cat芍logos
+* Catalogos
 * Datos iniciales
 * Usuario administrador
 
 ---
 
-# Ejecuci車n del Proyecto
+# Ejecucion del Proyecto
 
 ## Visual Studio
 
@@ -513,7 +516,7 @@ dotnet run
 
 # Swagger
 
-La documentaci車n interactiva estar芍 disponible en:
+La documentacion interactiva estara disponible en:
 
 ```text
 https://localhost:{puerto}/swagger
@@ -541,17 +544,17 @@ dotnet test
 
 ---
 
-# Caracter赤sticas Implementadas
+# Caracteristicas Implementadas
 
 * JWT Authentication
 * Roles y Permisos
-* Gesti車n de Empleados
-* Gesti車n de Usuarios
-* Auditor赤a Autom芍tica
-* Cat芍logos
+* Gestion de Empleados
+* Gestion de Usuarios
+* Auditoria Automatica
+* Catalogos
 * Reportes
 * Soft Delete
-* Paginaci車n
+* Paginacion
 * Logging
 * Validaciones
 * Swagger
@@ -561,6 +564,8 @@ dotnet test
 * Repository Pattern
 * Dependency Injection
 
-## ?? Licencia
+---
 
-Proyecto desarrollado con fines acad矇micos y de demostraci籀n de buenas pr獺cticas de desarrollo en .NET.
+# Licencia
+
+Proyecto desarrollado con fines academicos y de demostracion de buenas practicas de desarrollo en .NET.
