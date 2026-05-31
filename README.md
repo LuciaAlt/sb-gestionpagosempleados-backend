@@ -46,6 +46,13 @@ La solucion fue desarrollada utilizando una arquitectura multicapa (N-Tier Archi
 
 ---
 
+## Capturas del Sistema
+Las capturas estan dentro de:
+* La carperta se llama Captura de pantalla el cual contiene un pdf con las imagenes con swagger
+* Nombre del archivo-Captura Captura backend -Sistema gestión de pagos de empleados .pdf
+
+---
+
 # Arquitectura de la Solucion
 
 ```text
