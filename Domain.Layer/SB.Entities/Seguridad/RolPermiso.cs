@@ -8,13 +8,10 @@ namespace SB.Entities.Seguridad;
 /// </summary>
 public class RolPermiso : EntityAuditableBase
 {
-
     public int RolId { get; set; }
     public Role? Rol { get; set; }
-
     public int PermisoId { get; set; }
     public Permiso? Permiso { get; set; }
-
     public DateTimeOffset FechaConcedida { get; set; } = DateTimeOffset.Now;
     public string UsuarioConcede { get; set; } = string.Empty;
 }

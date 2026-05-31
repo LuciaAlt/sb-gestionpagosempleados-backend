@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SB.Repositories.Migrations
 {
     /// <inheritdoc />
-    public partial class inicialbasededatosSB : Migration
+    public partial class Inicialbasededatos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -239,11 +239,12 @@ namespace SB.Repositories.Migrations
                 schema: "Seguridad",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RolId = table.Column<int>(type: "int", nullable: false),
                     PermisoId = table.Column<int>(type: "int", nullable: false),
                     FechaConcedida = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UsuarioConcede = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     UsuarioRegistra = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaRegistra = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UsuarioModifica = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -253,7 +254,7 @@ namespace SB.Repositories.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RolesPermisos", x => new { x.RolId, x.PermisoId });
+                    table.PrimaryKey("PK_RolesPermisos", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RolesPermisos_Permiso_PermisoId",
                         column: x => x.PermisoId,
@@ -345,32 +346,37 @@ namespace SB.Repositories.Migrations
                     { 1, true, false, "EMPLEADOS_VER", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 1, "Ver empleados", null, "SYSTEM" },
                     { 2, true, false, "EMPLEADOS_CREAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 1, "Crear empleados", null, "SYSTEM" },
                     { 3, true, false, "EMPLEADOS_EDITAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 1, "Editar empleados", null, "SYSTEM" },
-                    { 4, true, false, "EMPLEADOS_INACTIVAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 1, "Inactivar empleados", null, "SYSTEM" },
-                    { 5, true, false, "REPORTES_VER", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 3, "Ver reportes", null, "SYSTEM" },
-                    { 6, true, false, "REPORTES_EXPORTAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 3, "Exportar reportes", null, "SYSTEM" },
-                    { 7, true, false, "USUARIOS_VER", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Ver usuarios", null, "SYSTEM" },
-                    { 8, true, false, "USUARIOS_CREAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Crear usuarios", null, "SYSTEM" },
-                    { 9, true, false, "AUDITORIA_VER", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Ver bitácora", null, "SYSTEM" }
+                    { 4, true, false, "EMPLEADOS_ACTIVARORDESACTIVAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 1, "Activa o inactivar empleados", null, "SYSTEM" },
+                    { 5, true, false, "USUARIOS_VER", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Ver usuarios", null, "SYSTEM" },
+                    { 6, true, false, "USUARIOS_CREAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Crear usuarios", null, "SYSTEM" },
+                    { 7, true, false, "USUARIOS_EDITAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Edita usuarios", null, "SYSTEM" },
+                    { 8, true, false, "USUARIOS_ACTIVARORDESACTIVAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Activa o inactivar usuarios", null, "SYSTEM" },
+                    { 9, true, false, "USUARIOS_BLOQUEAORDESBLOQUEA", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Bloquea o desbloquea  usuarios", null, "SYSTEM" },
+                    { 10, true, false, "AUDITORIA_VER", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 2, "Ver bitácora", null, "SYSTEM" },
+                    { 11, true, false, "REPORTES_VER", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 3, "Ver reportes", null, "SYSTEM" },
+                    { 12, true, false, "REPORTES_EXPORTAR", null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 3, "Exportar reportes", null, "SYSTEM" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "Seguridad",
                 table: "RolesPermisos",
-                columns: new[] { "PermisoId", "RolId", "Activo", "Borrado", "FechaConcedida", "FechaModifica", "FechaRegistra", "Id", "UsuarioConcede", "UsuarioModifica", "UsuarioRegistra" },
+                columns: new[] { "Id", "Activo", "Borrado", "FechaConcedida", "FechaModifica", "FechaRegistra", "PermisoId", "RolId", "UsuarioConcede", "UsuarioModifica", "UsuarioRegistra" },
                 values: new object[,]
                 {
-                    { 1, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2631), new TimeSpan(0, -4, 0, 0, 0)), 1, "SYSTEM", null, "" },
-                    { 2, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2700), new TimeSpan(0, -4, 0, 0, 0)), 2, "SYSTEM", null, "" },
-                    { 3, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2704), new TimeSpan(0, -4, 0, 0, 0)), 3, "SYSTEM", null, "" },
-                    { 4, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2706), new TimeSpan(0, -4, 0, 0, 0)), 4, "SYSTEM", null, "" },
-                    { 5, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2709), new TimeSpan(0, -4, 0, 0, 0)), 5, "SYSTEM", null, "" },
-                    { 6, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2711), new TimeSpan(0, -4, 0, 0, 0)), 6, "SYSTEM", null, "" },
-                    { 7, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2713), new TimeSpan(0, -4, 0, 0, 0)), 7, "SYSTEM", null, "" },
-                    { 8, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2715), new TimeSpan(0, -4, 0, 0, 0)), 8, "SYSTEM", null, "" },
-                    { 9, 1, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2717), new TimeSpan(0, -4, 0, 0, 0)), 9, "SYSTEM", null, "" },
-                    { 1, 2, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2297), new TimeSpan(0, -4, 0, 0, 0)), 100, "SYSTEM", null, "" },
-                    { 5, 2, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2317), new TimeSpan(0, -4, 0, 0, 0)), 101, "SYSTEM", null, "" },
-                    { 6, 2, true, false, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2321), new TimeSpan(0, -4, 0, 0, 0)), 102, "SYSTEM", null, "" }
+                    { 1, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(605), new TimeSpan(0, -4, 0, 0, 0)), 1, 1, "SYSTEM", null, "" },
+                    { 2, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(610), new TimeSpan(0, -4, 0, 0, 0)), 2, 1, "SYSTEM", null, "" },
+                    { 3, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(611), new TimeSpan(0, -4, 0, 0, 0)), 3, 1, "SYSTEM", null, "" },
+                    { 4, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(613), new TimeSpan(0, -4, 0, 0, 0)), 4, 1, "SYSTEM", null, "" },
+                    { 5, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(615), new TimeSpan(0, -4, 0, 0, 0)), 5, 1, "SYSTEM", null, "" },
+                    { 6, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(616), new TimeSpan(0, -4, 0, 0, 0)), 6, 1, "SYSTEM", null, "" },
+                    { 7, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(618), new TimeSpan(0, -4, 0, 0, 0)), 7, 1, "SYSTEM", null, "" },
+                    { 8, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(619), new TimeSpan(0, -4, 0, 0, 0)), 8, 1, "SYSTEM", null, "" },
+                    { 9, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(621), new TimeSpan(0, -4, 0, 0, 0)), 9, 1, "SYSTEM", null, "" },
+                    { 10, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(622), new TimeSpan(0, -4, 0, 0, 0)), 10, 1, "SYSTEM", null, "" },
+                    { 11, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(624), new TimeSpan(0, -4, 0, 0, 0)), 11, 1, "SYSTEM", null, "" },
+                    { 12, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(625), new TimeSpan(0, -4, 0, 0, 0)), 12, 1, "SYSTEM", null, "" },
+                    { 13, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(402), new TimeSpan(0, -4, 0, 0, 0)), 1, 2, "SYSTEM", null, "" },
+                    { 14, true, false, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)), null, new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(414), new TimeSpan(0, -4, 0, 0, 0)), 5, 2, "SYSTEM", null, "" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -449,6 +455,13 @@ namespace SB.Repositories.Migrations
                 schema: "Seguridad",
                 table: "RolesPermisos",
                 column: "PermisoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RolesPermisos_RolId_PermisoId",
+                schema: "Seguridad",
+                table: "RolesPermisos",
+                columns: new[] { "RolId", "PermisoId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TipoEmpleado_Codigo",

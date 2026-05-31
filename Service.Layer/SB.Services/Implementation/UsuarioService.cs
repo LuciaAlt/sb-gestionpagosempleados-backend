@@ -9,6 +9,7 @@ using SB.Helpers.Exceptions;
 using SB.Helpers.Mappers;
 using SB.Models.Base;
 using SB.Models.Contracts;
+using SB.Models.Dtos.RRHH;
 using SB.Models.Dtos.Seguridad;
 using SB.Models.Paginator;
 using SB.Services.Interface;
@@ -94,22 +95,34 @@ public class UsuarioService : IUsuariosService
         return entity is null ? null : MapWithPayment(entity);
     }
 
-    private static async Task ValidateAsync<T>(IValidator<T> validator, T instance, CancellationToken ct)
+    private async Task ValidateAsync(UsuarioDto dto, CancellationToken ct)
     {
-        var result = await validator.ValidateAsync(instance, ct);
-        if (!result.IsValid)
-        {
-            var errors = result.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
-            throw new Helpers.Exceptions.ValidationException(errors);
-        }
+        var result = await _validator.ValidateAsync(dto, ct);
+
+        if (result.IsValid)
+            return;
+
+        var errors = result.Errors
+            .GroupBy(e => e.PropertyName)
+            .ToDictionary(
+                g => g.Key,
+                g => g.Select(e => e.ErrorMessage).ToArray());
+
+        var mensaje = string.Join(
+            " | ",
+            result.Errors
+                .Select(e => e.ErrorMessage)
+                .Distinct());
+
+        throw new Helpers.Exceptions.ValidationException(
+            mensaje,
+            errors);
     }
     public async Task<UsuarioDto> CreateAsync(UsuarioDto request, CancellationToken ct = default)
     {
-        await ValidateAsync(_validator, request, ct);
+        await ValidateAsync(request, ct);
 
-        if(string.IsNullOrWhiteSpace(request.Nombres))
+        if (string.IsNullOrWhiteSpace(request.Nombres))
             throw new AppException("El nombre del usuario es requerido.");
 
         if (string.IsNullOrWhiteSpace(request.Apellidos))
@@ -150,7 +163,7 @@ public class UsuarioService : IUsuariosService
 
     public async Task<UsuarioDto> UpdateAsync(int id, UsuarioDto dto, CancellationToken ct = default)
     {
-        await ValidateAsync(_validator, dto, ct);
+        await ValidateAsync(dto, ct);
 
         if (string.IsNullOrWhiteSpace(dto.Nombres))
             throw new AppException("El nombre del usuario es requerido.");
@@ -253,17 +266,6 @@ public class UsuarioService : IUsuariosService
         _repo.Update(entity);
         await _repo.SaveChangesAsync(ct);
         _logger.LogInformation("Usuario delete: {Id}", id);
-    }
-    private async Task ValidateAsync(UsuarioDto dto, CancellationToken ct)
-    {
-        var result = await _validator.ValidateAsync(dto, ct);
-        if (!result.IsValid)
-        {
-            var errors = result.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
-            throw new Helpers.Exceptions.ValidationException(errors);
-        }
     }
 
     private UsuarioDto MapWithPayment(Usuario e)
