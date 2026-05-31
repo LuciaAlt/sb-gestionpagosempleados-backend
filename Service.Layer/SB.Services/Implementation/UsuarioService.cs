@@ -1,5 +1,4 @@
 using AutoMapper;
-using Azure.Core;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,6 @@ using SB.Helpers.Exceptions;
 using SB.Helpers.Mappers;
 using SB.Models.Base;
 using SB.Models.Contracts;
-using SB.Models.Dtos.Auth;
 using SB.Models.Dtos.Seguridad;
 using SB.Models.Paginator;
 using SB.Services.Interface;
