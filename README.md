@@ -541,7 +541,6 @@ Ejecutar:
 ```bash
 dotnet test
 ```
-
 ---
 
 # Caracteristicas Implementadas
@@ -569,3 +568,4 @@ dotnet test
 # Licencia
 
 Proyecto desarrollado con fines academicos y de demostracion de buenas practicas de desarrollo en .NET.
+
