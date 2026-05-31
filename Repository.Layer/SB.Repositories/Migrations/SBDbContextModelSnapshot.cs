@@ -530,15 +530,15 @@ namespace SB.Repositories.Migrations
                             Id = 4,
                             Activo = true,
                             Borrado = false,
-                            Codigo = "EMPLEADOS_INACTIVAR",
+                            Codigo = "EMPLEADOS_ACTIVARORDESACTIVAR",
                             FechaRegistra = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             ModuloId = 1,
-                            Nombre = "Inactivar empleados",
+                            Nombre = "Activa o inactivar empleados",
                             UsuarioRegistra = "SYSTEM"
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 5,
                             Activo = true,
                             Borrado = false,
                             Codigo = "USUARIOS_VER",
@@ -549,7 +549,7 @@ namespace SB.Repositories.Migrations
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 6,
                             Activo = true,
                             Borrado = false,
                             Codigo = "USUARIOS_CREAR",
@@ -560,7 +560,40 @@ namespace SB.Repositories.Migrations
                         },
                         new
                         {
+                            Id = 7,
+                            Activo = true,
+                            Borrado = false,
+                            Codigo = "USUARIOS_EDITAR",
+                            FechaRegistra = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModuloId = 2,
+                            Nombre = "Edita usuarios",
+                            UsuarioRegistra = "SYSTEM"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Activo = true,
+                            Borrado = false,
+                            Codigo = "USUARIOS_ACTIVARORDESACTIVAR",
+                            FechaRegistra = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModuloId = 2,
+                            Nombre = "Activa o inactivar usuarios",
+                            UsuarioRegistra = "SYSTEM"
+                        },
+                        new
+                        {
                             Id = 9,
+                            Activo = true,
+                            Borrado = false,
+                            Codigo = "USUARIOS_BLOQUEAORDESBLOQUEA",
+                            FechaRegistra = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            ModuloId = 2,
+                            Nombre = "Bloquea o desbloquea  usuarios",
+                            UsuarioRegistra = "SYSTEM"
+                        },
+                        new
+                        {
+                            Id = 10,
                             Activo = true,
                             Borrado = false,
                             Codigo = "AUDITORIA_VER",
@@ -571,7 +604,7 @@ namespace SB.Repositories.Migrations
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 11,
                             Activo = true,
                             Borrado = false,
                             Codigo = "REPORTES_VER",
@@ -582,7 +615,7 @@ namespace SB.Repositories.Migrations
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 12,
                             Activo = true,
                             Borrado = false,
                             Codigo = "REPORTES_EXPORTAR",
@@ -595,11 +628,11 @@ namespace SB.Repositories.Migrations
 
             modelBuilder.Entity("SB.Entities.Seguridad.RolPermiso", b =>
                 {
-                    b.Property<int>("RolId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("PermisoId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Activo")
                         .HasColumnType("bit");
@@ -616,7 +649,10 @@ namespace SB.Repositories.Migrations
                     b.Property<DateTimeOffset>("FechaRegistra")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("PermisoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RolId")
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioConcede")
@@ -631,154 +667,181 @@ namespace SB.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RolId", "PermisoId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PermisoId");
+
+                    b.HasIndex("RolId", "PermisoId")
+                        .IsUnique();
 
                     b.ToTable("RolesPermisos", "Seguridad");
 
                     b.HasData(
                         new
                         {
-                            RolId = 1,
-                            PermisoId = 1,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2631), new TimeSpan(0, -4, 0, 0, 0)),
                             Id = 1,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 1,
-                            PermisoId = 2,
                             Activo = true,
                             Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2700), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 2,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 1,
-                            PermisoId = 3,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2704), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 3,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 1,
-                            PermisoId = 4,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2706), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 4,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 1,
-                            PermisoId = 5,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2709), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 5,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 1,
-                            PermisoId = 6,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2711), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 6,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 1,
-                            PermisoId = 7,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2713), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 7,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 1,
-                            PermisoId = 8,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2715), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 8,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 1,
-                            PermisoId = 9,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2717), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 9,
-                            UsuarioConcede = "SYSTEM",
-                            UsuarioRegistra = ""
-                        },
-                        new
-                        {
-                            RolId = 2,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(605), new TimeSpan(0, -4, 0, 0, 0)),
                             PermisoId = 1,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2297), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 100,
+                            RolId = 1,
                             UsuarioConcede = "SYSTEM",
                             UsuarioRegistra = ""
                         },
                         new
                         {
-                            RolId = 2,
+                            Id = 2,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(610), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 2,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(611), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 3,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(613), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 4,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(615), new TimeSpan(0, -4, 0, 0, 0)),
                             PermisoId = 5,
-                            Activo = true,
-                            Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2317), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 101,
+                            RolId = 1,
                             UsuarioConcede = "SYSTEM",
                             UsuarioRegistra = ""
                         },
                         new
                         {
-                            RolId = 2,
-                            PermisoId = 6,
+                            Id = 6,
                             Activo = true,
                             Borrado = false,
-                            FechaConcedida = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 29, 19, 12, 12, 738, DateTimeKind.Unspecified).AddTicks(2321), new TimeSpan(0, -4, 0, 0, 0)),
-                            Id = 102,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(616), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 6,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(618), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 7,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(619), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 8,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(621), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 9,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(622), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 10,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(624), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 11,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(625), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 12,
+                            RolId = 1,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(402), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 1,
+                            RolId = 2,
+                            UsuarioConcede = "SYSTEM",
+                            UsuarioRegistra = ""
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Activo = true,
+                            Borrado = false,
+                            FechaConcedida = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(5), new TimeSpan(0, -4, 0, 0, 0)),
+                            FechaRegistra = new DateTimeOffset(new DateTime(2026, 5, 31, 12, 39, 15, 202, DateTimeKind.Unspecified).AddTicks(414), new TimeSpan(0, -4, 0, 0, 0)),
+                            PermisoId = 5,
+                            RolId = 2,
                             UsuarioConcede = "SYSTEM",
                             UsuarioRegistra = ""
                         });
