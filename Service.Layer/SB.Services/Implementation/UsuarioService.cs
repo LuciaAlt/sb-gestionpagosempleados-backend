@@ -1,4 +1,5 @@
 using AutoMapper;
+using Azure.Core;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using SB.Models.Contracts;
 using SB.Models.Dtos.Seguridad;
 using SB.Models.Paginator;
 using SB.Services.Interface;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace SB.Services.Implementation;
@@ -20,7 +22,6 @@ public class UsuarioService : IUsuariosService
     private readonly IMapper _mapper;
     private readonly ILogger<UsuarioService> _logger;
     private readonly IValidator<UsuarioDto> _validator;
-    private readonly IValidator<RegistrarUsuarioDto> _registerValidator;
     private readonly IPasswordHasher _hasher;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -28,13 +29,16 @@ public class UsuarioService : IUsuariosService
         IMapper mapper,
          IPasswordHasher hasher,
          IHttpContextAccessor httpContextAccessor,
+         IValidator<UsuarioDto> validator,
          ILogger<UsuarioService> logger)
     {
         _repo = repo;
         _mapper = mapper;
         _logger = logger;
         _hasher = hasher;
+        _validator = validator;
         _httpContextAccessor = httpContextAccessor;
+
     }
 
     public async Task<DataCollection<UsuarioDto>> GetPaginate(
@@ -146,7 +150,7 @@ public class UsuarioService : IUsuariosService
 
     public async Task<UsuarioDto> UpdateAsync(int id, UsuarioDto dto, CancellationToken ct = default)
     {
-        await ValidateAsync(dto, ct);
+        await ValidateAsync(_validator, dto, ct);
 
         if (string.IsNullOrWhiteSpace(dto.Nombres))
             throw new AppException("El nombre del usuario es requerido.");

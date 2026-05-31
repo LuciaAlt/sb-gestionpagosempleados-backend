@@ -7,9 +7,9 @@ using SB.Models.Helpers;
 
 namespace SB.Repositories.Validators;
 
-public class EmployeeDtoValidator : AbstractValidator<EmpleadoDtos>
+public class EmpleadoDtoValidator : AbstractValidator<EmpleadoDtos>
 {
-    public EmployeeDtoValidator()
+    public EmpleadoDtoValidator()
     {
         RuleFor(x => x.Nombres).NotEmpty().MaximumLength(50);
         RuleFor(x => x.Apellidos).NotEmpty().MaximumLength(50);
@@ -54,7 +54,7 @@ public class LoginRequestDtoValidator : AbstractValidator<LoginRequestDto>
     }
 }
 
-public class UsuarioDtoValidator : AbstractValidator<RegistrarUsuarioDto>
+public class UsuarioDtoValidator : AbstractValidator<UsuarioDto>
 {
     public UsuarioDtoValidator()
     {
@@ -62,7 +62,6 @@ public class UsuarioDtoValidator : AbstractValidator<RegistrarUsuarioDto>
         RuleFor(x => x.Nombres).NotEmpty().MaximumLength(100);
         RuleFor(x => x.Apellidos).NotEmpty().MaximumLength(100);
         RuleFor(x => x.Correo).NotEmpty().EmailAddress().MaximumLength(100);
-        RuleFor(x => x.HashContrasena).NotEmpty().MinimumLength(6);
-        RuleFor(x => x.RoleId).GreaterThan(0);
+        RuleFor(x => x.RolId).GreaterThan(0);
     }
 }

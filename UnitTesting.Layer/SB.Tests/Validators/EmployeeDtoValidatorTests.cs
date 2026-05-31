@@ -8,7 +8,7 @@ namespace SB.Tests.Validators;
 
 public class EmployeeDtoValidatorTests
 {
-    private readonly EmployeeDtoValidator _validator = new();
+    private readonly EmpleadoDtoValidator _validator = new();
 
     [Fact]
     public void Salaried_RequiresSalarioSemanal()

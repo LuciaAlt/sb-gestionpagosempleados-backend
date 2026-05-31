@@ -34,7 +34,6 @@ public class AuthService : IAuthService
         IJwtTokenGenerator tokenGen,
         ICurrentUserService currentUser,
         IValidator<LoginRequestDto> loginValidator,
-        IValidator<RegistrarUsuarioDto> registerValidator,
         ILogger<AuthService> logger)
     {
         _userRepo = userRepo;

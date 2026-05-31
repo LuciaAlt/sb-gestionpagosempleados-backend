@@ -11,7 +11,7 @@ namespace SB.Models.Dtos.Seguridad
         public int Id { get; set; }
         public int RolId { get; set; }
         public string NombreUsuario { get; set; } = string.Empty;
-        public string HashContrasena { get; set; } = string.Empty;
+        public string? HashContrasena { get; set; } = string.Empty;
         public string Nombres { get; set; } = string.Empty;
         public string Apellidos { get; set; } = string.Empty;
         public string Correo { get; set; } = string.Empty;
@@ -21,6 +21,6 @@ namespace SB.Models.Dtos.Seguridad
         public DateTimeOffset? FechaCambioContrasena { get; set; }
         public DateTimeOffset? UltimoAcceso { get; set; }
 
-        public string NombreCompleto => $"{Nombres} {Apellidos}";
+        public string? NombreCompleto => $"{Nombres} {Apellidos}";
     }
 }
