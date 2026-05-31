@@ -31,16 +31,20 @@ public class PermisoConfiguration : IEntityTypeConfiguration<Permiso>
             new Permiso { Id = 1, ModuloId = 1, Codigo = "EMPLEADOS_VER",      Nombre = "Ver empleados",       UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
             new Permiso { Id = 2, ModuloId = 1, Codigo = "EMPLEADOS_CREAR",    Nombre = "Crear empleados",     UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
             new Permiso { Id = 3, ModuloId = 1, Codigo = "EMPLEADOS_EDITAR",   Nombre = "Editar empleados",    UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
-            new Permiso { Id = 4, ModuloId = 1, Codigo = "EMPLEADOS_INACTIVAR",Nombre = "Inactivar empleados", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+            new Permiso { Id = 4, ModuloId = 1, Codigo = "EMPLEADOS_ACTIVARORDESACTIVAR", Nombre = "Activa o inactivar empleados", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
 
             // Módulo USUARIOS (id=2)
-            new Permiso { Id = 7, ModuloId = 2, Codigo = "USUARIOS_VER", Nombre = "Ver usuarios", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
-            new Permiso { Id = 8, ModuloId = 2, Codigo = "USUARIOS_CREAR", Nombre = "Crear usuarios", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
-            new Permiso { Id = 9, ModuloId = 2, Codigo = "AUDITORIA_VER", Nombre = "Ver bitácora", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+            new Permiso { Id = 5, ModuloId = 2, Codigo = "USUARIOS_VER", Nombre = "Ver usuarios", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+            new Permiso { Id = 6, ModuloId = 2, Codigo = "USUARIOS_CREAR", Nombre = "Crear usuarios", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+            new Permiso { Id = 7, ModuloId = 2, Codigo = "USUARIOS_EDITAR", Nombre = "Edita usuarios", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+            new Permiso { Id = 8, ModuloId = 2, Codigo = "USUARIOS_ACTIVARORDESACTIVAR", Nombre = "Activa o inactivar usuarios", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+            new Permiso { Id = 9, ModuloId = 2, Codigo = "USUARIOS_BLOQUEAORDESBLOQUEA", Nombre = "Bloquea o desbloquea  usuarios", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+           
+            new Permiso { Id = 10, ModuloId = 2, Codigo = "AUDITORIA_VER", Nombre = "Ver bitácora", UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+           
 
-            // Módulo REPORTES (id=3)
-            new Permiso { Id = 5, ModuloId = 3, Codigo = "REPORTES_VER",       Nombre = "Ver reportes",        UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
-            new Permiso { Id = 6, ModuloId = 3, Codigo = "REPORTES_EXPORTAR",  Nombre = "Exportar reportes",   UsuarioRegistra = sys, FechaRegistra = seed, Activo = true }
+            new Permiso { Id = 11, ModuloId = 3, Codigo = "REPORTES_VER",       Nombre = "Ver reportes",        UsuarioRegistra = sys, FechaRegistra = seed, Activo = true },
+            new Permiso { Id = 12, ModuloId = 3, Codigo = "REPORTES_EXPORTAR",  Nombre = "Exportar reportes",   UsuarioRegistra = sys, FechaRegistra = seed, Activo = true }
 
            
         );
