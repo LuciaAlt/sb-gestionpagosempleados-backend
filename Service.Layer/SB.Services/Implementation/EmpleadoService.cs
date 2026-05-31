@@ -126,6 +126,9 @@ public class EmpleadoService : IEmpleadoService
         var usuarioId = _httpContextAccessor.HttpContext?.User
             ?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "SYSTEM";
 
+        var usuarioname = _httpContextAccessor.HttpContext?.User
+            ?.FindFirst(ClaimTypes.Name)?.Value ?? "SYSTEM";
+
         entity.FechaRegistra = DateTimeOffset.UtcNow;
         entity.UsuarioRegistra = usuarioId;
         entity.Activo = true;
@@ -135,10 +138,10 @@ public class EmpleadoService : IEmpleadoService
         await _repo.SaveChangesAsync(ct);
 
         _logger.LogInformation(
-            "Empleado creado: {Id} ({Tipo}) por usuario {UsuarioId}",
+            "Empleado creado: {Id} por usuario {usuarioname}",
             entity.Id,
             entity.TipoCodigo,
-            usuarioId);
+            usuarioname);
 
         var created = await _repo.GetByIdAsync(entity.Id, ct);
         return MapWithEmpleado(created!);
@@ -214,6 +217,9 @@ public class EmpleadoService : IEmpleadoService
         var usuarioId = _httpContextAccessor.HttpContext?.User
         ?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+        var usuarioname = _httpContextAccessor.HttpContext?.User
+            ?.FindFirst(ClaimTypes.Name)?.Value ?? "SYSTEM";
+
         entity.FechaModifica = DateTimeOffset.Now;
         entity.UsuarioModifica = usuarioId;
 
@@ -222,8 +228,14 @@ public class EmpleadoService : IEmpleadoService
         _repo.Update(entity);
         await _repo.SaveChangesAsync(ct);
 
-        _logger.LogInformation("Empleado actualizado: {Id}", id);
+        _logger.LogInformation(
+           "Empleado actualizado: {Id} por usuario {usuarioname}",
+           entity.Id,
+           entity.TipoCodigo,
+           usuarioname);
+       
         var updated = await _repo.GetByIdAsync(id, ct);
+
         return MapWithEmpleado(updated!);
     }
 
@@ -283,13 +295,25 @@ public class EmpleadoService : IEmpleadoService
     private async Task ValidateAsync(EmpleadoDtos dto, CancellationToken ct)
     {
         var result = await _validator.ValidateAsync(dto, ct);
-        if (!result.IsValid)
-        {
-            var errors = result.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
-            throw new Helpers.Exceptions.ValidationException(errors);
-        }
+
+        if (result.IsValid)
+            return;
+
+        var errors = result.Errors
+            .GroupBy(e => e.PropertyName)
+            .ToDictionary(
+                g => g.Key,
+                g => g.Select(e => e.ErrorMessage).ToArray());
+
+        var mensaje = string.Join(
+            " | ",
+            result.Errors
+                .Select(e => e.ErrorMessage)
+                .Distinct());
+
+        throw new Helpers.Exceptions.ValidationException(
+            mensaje,
+            errors);
     }
 
     private EmpleadoDtos MapWithEmpleado(Empleado e)

@@ -15,8 +15,13 @@ public class NotFoundException : AppException
 public class ValidationException : AppException
 {
     public IDictionary<string, string[]> Errors { get; }
-    public ValidationException(IDictionary<string, string[]> errors)
-        : base("Errores de validación.", 422) => Errors = errors;
+    public ValidationException(
+        string message,
+        IDictionary<string, string[]> errors)
+        : base(message, 422)
+    {
+        Errors = errors;
+    }
 }
 
 public class UnauthorizedException : AppException

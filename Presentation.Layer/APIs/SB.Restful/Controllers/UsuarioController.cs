@@ -59,7 +59,7 @@ namespace SB.Restful.Controllers
         }
 
         /// <summary>Activa o Inactiva un usuario (baja lógica). Solo Admin.</summary>
-        [HttpPatch("{id:int}")]
+        [HttpPatch("{id:int}/active")]
         [Authorize(Roles = Constants.Roles.Admin)]
         public async Task<IActionResult> ActivateOrDeactivate(int id, [FromQuery] bool value, CancellationToken ct)
         {
