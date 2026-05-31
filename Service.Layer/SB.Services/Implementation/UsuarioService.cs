@@ -208,7 +208,6 @@ public class UsuarioService : IUsuariosService
         await _repo.SaveChangesAsync(ct);
         _logger.LogInformation("Usuario activado: {Id}", id);
     }
-
     public async Task BlockAsync(int id, CancellationToken ct = default)
     {
         var entity = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundException("Usuario", id);
@@ -223,6 +222,21 @@ public class UsuarioService : IUsuariosService
         _repo.Update(entity);
         await _repo.SaveChangesAsync(ct);
         _logger.LogInformation("Usuario block: {Id}", id);
+    }
+    public async Task UnlockAsync(int id, CancellationToken ct = default)
+    {
+        var entity = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundException("Usuario", id);
+
+        var usuarioId = _httpContextAccessor.HttpContext?.User
+       ?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        entity.FechaModifica = DateTimeOffset.Now;
+        entity.UsuarioModifica = usuarioId;
+        entity.Bloqueado = false;
+
+        _repo.Update(entity);
+        await _repo.SaveChangesAsync(ct);
+        _logger.LogInformation("Usuario unblock: {Id}", id);
     }
     public async Task DeleteAsync(int id, CancellationToken ct = default)
     {

@@ -70,7 +70,18 @@ namespace SB.Restful.Controllers
 
             return NoContent();
         }
+        /// <summary>Desbloquear Or bloquear un usuario (baja lógica). Solo Admin.</summary>
+        [HttpDelete("{id:int}")]
+        [Authorize(Roles = Constants.Roles.Admin)]
+        public async Task<IActionResult> UnlockOrBlock(int id, bool value, CancellationToken ct)
+        {
+            if (value)
+                await _service.BlockAsync(id, ct);
+            else
+                await _service.UnlockAsync(id, ct);
 
+            return NoContent();
+        }
         /// <summary>Delete un usuario (baja lógica). Solo Admin.</summary>
         [HttpDelete("{id:int}")]
         [Authorize(Roles = Constants.Roles.Admin)]
