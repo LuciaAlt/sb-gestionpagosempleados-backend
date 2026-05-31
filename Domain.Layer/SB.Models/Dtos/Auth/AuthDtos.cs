@@ -15,13 +15,18 @@ public class LoginResponseDto
 {
     public string Token { get; set; } = string.Empty;
     public string NombreUsuario { get; set; } = string.Empty;
+    public string Correo { get; set; } = string.Empty;
     public string NombreCompleto { get; set; } = string.Empty;
     public bool Activo { get; set; } = false;
     public bool Bloqueado { get; set; } = false;
     public string UsuarioId { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
+    public string NombreRole { get; set; } = string.Empty;
     public IEnumerable<string> Permisos { get; set; } = Enumerable.Empty<string>();
     public IEnumerable<Modulo> Modulos { get; set; } = Enumerable.Empty<Modulo>();
+    public DateTimeOffset FechaCreacion { get; set; }
+    public DateTimeOffset InicioEn { get; set; }
     public DateTimeOffset ExpiraEn { get; set; }
+    public DateTimeOffset UltimoAcceso { get; set; }
 }
 

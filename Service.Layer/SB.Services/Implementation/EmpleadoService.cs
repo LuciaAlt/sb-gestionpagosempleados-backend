@@ -112,7 +112,7 @@ public class EmpleadoService : IEmpleadoService
         if (dto.TipoEmpleadoId <= 0)
             throw new AppException("Debe seleccionar un tipo de empleado válido.");
 
-        if (dto.DepartmentoId <= 0)
+        if (dto.DepartamentoId <= 0)
             throw new AppException("Debe seleccionar un departamento válido.");
 
         if (await _repo.ExistsBySsnAsync(dto.NumeroSeguroSocial, null, ct))
@@ -201,7 +201,7 @@ public class EmpleadoService : IEmpleadoService
         if (dto.TipoEmpleadoId <= 0)
             throw new AppException("Debe seleccionar un tipo de empleado válido.");
 
-        if (dto.DepartmentoId <= 0)
+        if (dto.DepartamentoId <= 0)
             throw new AppException("Debe seleccionar un departamento válido.");
 
         var entity = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundException("Empleado", id);

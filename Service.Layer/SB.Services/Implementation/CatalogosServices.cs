@@ -13,6 +13,7 @@ public class CatalogService : ICatalogosService
     private readonly IDepartmentRepository _deptRepo;
     private readonly IEmployeeTypeRepository _typeRepo;
     private readonly IModuleRepository _moduleRepo;
+    private readonly IRoleRepository _roleRepo;
     private readonly IMapper _mapper;
     private readonly ILogger<CatalogService> _logger;
 
@@ -45,6 +46,12 @@ public class CatalogService : ICatalogosService
         _logger.LogInformation("Listando módulos");
         var items = (await _moduleRepo.GetAllAsync(ct)).Where(m => m.Activo).OrderBy(m => m.Orden);
         return _mapper.Map<IEnumerable<ModuleDto>>(items);
+    }
+    public async Task<IEnumerable<RolDto>> GetRolesAsync(CancellationToken ct = default)
+    {
+        _logger.LogInformation("Listando roles");
+        var items = (await _roleRepo.GetAllAsync(ct)).Where(m => m.Activo).OrderBy(m => m.Nombre);
+        return _mapper.Map<IEnumerable<RolDto>>(items);
     }
 }
 

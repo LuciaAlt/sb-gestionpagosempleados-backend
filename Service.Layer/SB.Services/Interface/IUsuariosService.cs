@@ -19,6 +19,7 @@ namespace SB.Services.Interface
         Task ActivateAsync(int id, CancellationToken ct = default);
         Task<IEnumerable<UsuarioDto>> GetAllAsync(CancellationToken ct = default);
         Task DeleteAsync(int id, CancellationToken ct = default);
+        Task UnlockAsync(int id, CancellationToken ct = default);
         Task BlockAsync(int id, CancellationToken ct = default);
     }
 }

@@ -9,10 +9,10 @@ using SB.Helpers.Exceptions;
 using SB.Helpers.Mappers;
 using SB.Models.Base;
 using SB.Models.Contracts;
-using SB.Models.Dtos.Auth;
 using SB.Models.Dtos.Seguridad;
 using SB.Models.Paginator;
 using SB.Services.Interface;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace SB.Services.Implementation;
@@ -22,7 +22,6 @@ public class UsuarioService : IUsuariosService
     private readonly IMapper _mapper;
     private readonly ILogger<UsuarioService> _logger;
     private readonly IValidator<UsuarioDto> _validator;
-    private readonly IValidator<RegistrarUsuarioDto> _registerValidator;
     private readonly IPasswordHasher _hasher;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -30,13 +29,16 @@ public class UsuarioService : IUsuariosService
         IMapper mapper,
          IPasswordHasher hasher,
          IHttpContextAccessor httpContextAccessor,
+         IValidator<UsuarioDto> validator,
          ILogger<UsuarioService> logger)
     {
         _repo = repo;
         _mapper = mapper;
         _logger = logger;
         _hasher = hasher;
+        _validator = validator;
         _httpContextAccessor = httpContextAccessor;
+
     }
 
     public async Task<DataCollection<UsuarioDto>> GetPaginate(
@@ -148,7 +150,7 @@ public class UsuarioService : IUsuariosService
 
     public async Task<UsuarioDto> UpdateAsync(int id, UsuarioDto dto, CancellationToken ct = default)
     {
-        await ValidateAsync(dto, ct);
+        await ValidateAsync(_validator, dto, ct);
 
         if (string.IsNullOrWhiteSpace(dto.Nombres))
             throw new AppException("El nombre del usuario es requerido.");
@@ -208,7 +210,6 @@ public class UsuarioService : IUsuariosService
         await _repo.SaveChangesAsync(ct);
         _logger.LogInformation("Usuario activado: {Id}", id);
     }
-
     public async Task BlockAsync(int id, CancellationToken ct = default)
     {
         var entity = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundException("Usuario", id);
@@ -223,6 +224,21 @@ public class UsuarioService : IUsuariosService
         _repo.Update(entity);
         await _repo.SaveChangesAsync(ct);
         _logger.LogInformation("Usuario block: {Id}", id);
+    }
+    public async Task UnlockAsync(int id, CancellationToken ct = default)
+    {
+        var entity = await _repo.GetByIdAsync(id, ct) ?? throw new NotFoundException("Usuario", id);
+
+        var usuarioId = _httpContextAccessor.HttpContext?.User
+       ?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        entity.FechaModifica = DateTimeOffset.Now;
+        entity.UsuarioModifica = usuarioId;
+        entity.Bloqueado = false;
+
+        _repo.Update(entity);
+        await _repo.SaveChangesAsync(ct);
+        _logger.LogInformation("Usuario unblock: {Id}", id);
     }
     public async Task DeleteAsync(int id, CancellationToken ct = default)
     {

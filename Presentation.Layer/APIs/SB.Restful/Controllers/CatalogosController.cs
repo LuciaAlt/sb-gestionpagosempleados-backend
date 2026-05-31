@@ -25,5 +25,9 @@ namespace SB.Restful.Controllers
         [HttpGet("modules")]
         public async Task<IActionResult> GetModules(CancellationToken ct)
             => Ok(await _service.GetModulesAsync(ct));
+
+        [HttpGet("roles")]
+        public async Task<IActionResult> GetRoles(CancellationToken ct)
+           => Ok(await _service.GetModulesAsync(ct));
     }
 }
